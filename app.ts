@@ -9,6 +9,7 @@ import matchesRouter from "./routes/matches";
 import commentsRouter from "./routes/comments";
 import spectatorRouter from "./routes/spectator";
 import fetchRouter from "./routes/fetch";
+import championRouter from "./routes/champion";
 
 dotenv.config();
 
@@ -29,8 +30,9 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use("/champions", championRouter);
 app.use("/summoner", summonerRouter);
-app.use("/comment", commentsRouter);
+app.use("/comments", commentsRouter);
 app.use("/matches", matchesRouter);
 app.use("/spectator", spectatorRouter);
 app.use("/fetch", fetchRouter);

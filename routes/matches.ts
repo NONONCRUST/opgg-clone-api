@@ -14,7 +14,7 @@ router.get("/:summoner", async (req: Request, res: Response) => {
       .equals(summonerName);
     console.log(matchesArray);
 
-    if (matchesArray.length === 0) res.status(200).send([]);
+    if (matchesArray.length === 0) return res.status(200).send([]);
 
     const body = {
       summonerName: matchesArray[0].summonerName,
