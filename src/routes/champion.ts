@@ -7,7 +7,7 @@ router.get("/", async (req: Request, res: Response) => {
   const version = req.params.version || "12.15";
   console.log(version);
   const championDataJSON = fs
-    .readFileSync(`data/${version}/champion.json`)
+    .readFileSync(`src/data/${version}/champion.json`)
     .toString();
 
   const championData = JSON.parse(championDataJSON);
@@ -26,7 +26,7 @@ router.get("/:champion", async (req: Request, res: Response) => {
 
   const version = req.query.version || "12.15";
   const championDataJSON = fs
-    .readFileSync(`data/${version}/champion.json`)
+    .readFileSync(`src/data/${version}/champion.json`)
     .toString();
 
   const championsData = JSON.parse(championDataJSON);
