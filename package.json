@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.ts",
   "scripts": {
+    "start": "node app.ts",
     "dev": "nodemon app.ts"
   },
   "keywords": [],
