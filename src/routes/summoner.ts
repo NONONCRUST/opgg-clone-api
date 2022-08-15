@@ -5,34 +5,42 @@ import { getLeagueBySummonerIdApi, getSummonerByNameApi } from "../api/riot";
 
 const router = express.Router();
 
+router.get("/", async (req: Request, res: Response) => {
+  const searchQuery = req.query.search;
+
+  const summonerArray = await SummonerModel.find({
+    name: { $regex: searchQuery, $options: "i" },
+  });
+
+  return res.status(200).send(summonerArray);
+});
+
 router.get("/:summoner", async (req: Request, res: Response) => {
   const summonerName = req.params.summoner;
-
-  const summonerArray = await SummonerModel.find()
-    .where("name")
-    .equals(summonerName);
-  if (summonerArray.length !== 0) {
-    const summoner = summonerArray[0];
-    const body = {
-      name: summoner.name,
-      profileIconId: summoner.profileIconId,
-      summonerLevel: summoner.summonerLevel,
-      queueType: summoner.queueType,
-      tier: summoner.tier,
-      rank: summoner.rank,
-      leaguePoints: summoner.leaguePoints,
-      wins: summoner.wins,
-      losses: summoner.losses,
-      updatedAt: summoner.updatedAt,
-    };
-
-    console.log("summoner found from mongodb!");
-    return res.status(200).send(body);
-  }
 
   try {
     const response = await getSummonerByNameApi(summonerName as string);
     const { name, id, profileIconId, summonerLevel } = response.data;
+
+    const summonerArray = await SummonerModel.find().where("name").equals(name);
+    if (summonerArray.length !== 0) {
+      const summoner = summonerArray[0];
+      const body = {
+        name: summoner.name,
+        profileIconId: summoner.profileIconId,
+        summonerLevel: summoner.summonerLevel,
+        queueType: summoner.queueType,
+        tier: summoner.tier,
+        rank: summoner.rank,
+        leaguePoints: summoner.leaguePoints,
+        wins: summoner.wins,
+        losses: summoner.losses,
+        updatedAt: summoner.updatedAt,
+      };
+
+      console.log("summoner found from mongodb!");
+      return res.status(200).send(body);
+    }
 
     const leagueResponse = await getLeagueBySummonerIdApi(id);
 

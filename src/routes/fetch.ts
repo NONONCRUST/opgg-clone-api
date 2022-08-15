@@ -17,9 +17,8 @@ router.get("/:summoner", async (req: Request, res: Response) => {
     if (typeof summonerName !== "string") return res.status(400).end();
 
     try {
-      const {
-        data: { puuid },
-      } = await getSummonerByNameApi(summonerName);
+      const response = await getSummonerByNameApi(summonerName);
+      const { name, id, profileIconId, summonerLevel, puuid } = response.data;
 
       const { data } = await getMatchIdsByPuuidApi(puuid);
 
@@ -79,17 +78,14 @@ router.get("/:summoner", async (req: Request, res: Response) => {
       });
 
       await MatchModel.findOneAndUpdate(
-        { summonerName: summonerName },
+        { summonerName: name },
         {
-          summonerName: summonerName,
+          summonerName: name,
           matches: filteredMatchList,
           updatedAt: new Date(),
         },
         { upsert: true }
       );
-
-      const response = await getSummonerByNameApi(summonerName);
-      const { name, id, profileIconId, summonerLevel } = response.data;
 
       const leagueResponse = await getLeagueBySummonerIdApi(id);
 
@@ -110,7 +106,7 @@ router.get("/:summoner", async (req: Request, res: Response) => {
         updatedAt: new Date(),
       };
 
-      await SummonerModel.findOneAndUpdate({ name: summonerName }, body, {
+      await SummonerModel.findOneAndUpdate({ name: name }, body, {
         upsert: true,
       });
 
