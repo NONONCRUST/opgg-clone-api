@@ -15,9 +15,12 @@ dotenv.config();
 
 const app = express();
 app.set("port", process.env.PORT || 4000);
-mongoose.connect(process.env.MONGODB_URI!, () => {
-  console.log("mongodb connected");
-});
+mongoose
+  .connect(process.env.MONGODB_URI!)
+  .then(() => console.log("MongoDB connected!"))
+  .catch((error) => console.log(error));
+
+console.log("mongodb", process.env.MONGODB_URI);
 
 app.use(
   cors({
