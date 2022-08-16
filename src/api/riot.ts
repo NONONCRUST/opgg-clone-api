@@ -18,7 +18,7 @@ export const getRotationApi = () =>
 
 export const getSummonerByNameApi = (summonerName: string) =>
   axiosRiotKr.get<GetSummonerByNameApiResponseType>(
-    `/lol/summoner/v4/summoners/by-name/${summonerName}`
+    `/lol/summoner/v4/summoners/by-name/${encodeURIComponent(summonerName)}`
   );
 
 export const getFeaturedGameApi = () =>
