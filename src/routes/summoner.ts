@@ -77,7 +77,7 @@ router.get("/:summoner", async (req: Request, res: Response) => {
     return res.status(200).send(body);
   } catch (error: any) {
     console.log(error);
-    if (error) return res.status(404).end();
+    if (error) return res.status(404).send("summoner not found");
 
     return res.status(500).end();
   }
