@@ -22,9 +22,14 @@ mongoose
 
 console.log("mongodb", process.env.MONGODB_URI);
 
+const whitelist = [
+  "http://localhost:3000",
+  "https://opgg-clone-one.vercel.app",
+];
+
 app.use(
   cors({
-    origin: true,
+    origin: whitelist,
     credentials: true,
   })
 );
