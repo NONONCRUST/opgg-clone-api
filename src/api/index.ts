@@ -1,7 +1,6 @@
 import axiosInstance from "axios";
 import dotenv from "dotenv";
 dotenv.config();
-console.log(process.env.RIOT_API_KEY);
 
 export const axiosRiotKr = axiosInstance.create({
   baseURL: "https://kr.api.riotgames.com",

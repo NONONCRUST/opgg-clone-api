@@ -9,7 +9,7 @@ import matchesRouter from "./routes/matches";
 import commentsRouter from "./routes/comments";
 import spectatorRouter from "./routes/spectator";
 import fetchRouter from "./routes/fetch";
-import championRouter from "./routes/champion";
+import championRouter from "./routes/champions";
 
 dotenv.config();
 
@@ -19,10 +19,8 @@ mongoose
   .connect(
     "mongodb+srv://nononcrust:nononmongodb123@cluster0.wo4rqpi.mongodb.net/?retryWrites=true&w=majority"
   )
-  .then(() => console.log("MongoDB connected!"))
+  .then(() => console.log("MongoDB connected"))
   .catch((error) => console.log(error));
-
-console.log("mongodb", process.env.MONGODB_URI);
 
 const whitelist = [
   "http://localhost:3000",
@@ -48,5 +46,5 @@ app.use("/spectator", spectatorRouter);
 app.use("/fetch", fetchRouter);
 
 app.listen(app.get("port"), () => {
-  console.log(`http://localhost:${app.get("port")}`);
+  console.log(`Server on`);
 });
